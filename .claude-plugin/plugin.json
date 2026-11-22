@@ -16,6 +16,9 @@
     "agents"
   ],
   "skills": [
-    "./skills/plan-with-patterns"
+    "./skills/grill-the-plan",
+    "./skills/plan-with-patterns",
+    "./skills/reflect",
+    "./skills/surgical-diff-review"
   ]
 }
