@@ -1,0 +1,13 @@
+{
+  "should_trigger": [
+    "I think the feature is done, review the diff before I commit",
+    "Did you change anything you didn't need to in this branch?",
+    "We finished all the slices from the plan, check the change is minimal and verified",
+    "Look over my PR before I open it and tell me if anything is off scope"
+  ],
+  "should_not_trigger": [
+    "Plan how we add caching to the data loader",
+    "Write a function that parses this CSV",
+    "What does git rebase do?"
+  ]
+}

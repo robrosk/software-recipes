@@ -33,10 +33,14 @@ All three read the same `.claude-plugin/marketplace.json` and `.claude-plugin/pl
 **Model-invoked** (the agent reaches for these when the task fits)
 
 - **[plan-with-patterns](./skills/plan-with-patterns/SKILL.md)**: Plan a change before coding it, naming its modules, seams and design patterns, cut to the simplest version.
+- **[surgical-diff-review](./skills/surgical-diff-review/SKILL.md)**: Check every changed line traces to the ask or plan; flag drift and missing verification.
 
 **User-invoked** (only you can fire these, by typing `/name`)
 
-- none yet
+- **[grill-the-plan](./skills/grill-the-plan/SKILL.md)**: Interview you one question at a time until the design is clear, then hand off to plan-with-patterns.
+- **[reflect](./skills/reflect/SKILL.md)**: Turn session lessons into proposed edits to skills, lint rules or notes.
+
+The loop: `grill-the-plan` → `plan-with-patterns` → build → `surgical-diff-review` → `reflect`.
 
 ## How the repo works
 
