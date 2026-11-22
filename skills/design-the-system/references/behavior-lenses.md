@@ -1,6 +1,6 @@
 # Behavior lenses
 
-Read this in step 2. Each lens is a family of questions; ask the ones that fit the system, one at a time.
+Read this in step 2 to fill gaps in the user's own list of questions, and in step 4 while grilling. Each lens is a family of questions; ask the ones that fit the system, one at a time. Scale and robustness questions live in [robustness-ladder.md](robustness-ladder.md).
 
 ## Invariants (INV)
 - What must be true at every moment the system runs? Think of balances, counts, ownership, ordering, uniqueness.
@@ -28,11 +28,8 @@ Read this in step 2. Each lens is a family of questions; ask the ones that fit t
 - Which operations must be idempotent?
 - Where do clocks, timeouts and deadlines matter?
 
-## Quality targets (Q)
-- Latency, throughput and availability: what numbers, at what percentile, at what load?
-- Data size now and in a year.
-- Cost per request, run or day.
-- Recovery: how much data can be lost, and how fast must it come back?
+## Cost (Q)
+- Cost per request, run or day, and the budget it must fit.
 
 ## Learning and control systems
 - What must the policy or model never output, and what catches it if it does?
