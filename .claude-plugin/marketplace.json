@@ -1,0 +1,22 @@
+{
+  "name": "software-recipes",
+  "owner": {
+    "name": "Rob"
+  },
+  "description": "Rob's software-recipes skills as a single installable plugin.",
+  "plugins": [
+    {
+      "name": "software-recipes",
+      "source": "./",
+      "description": "Rob's agent skills for planning, building and verifying software: pattern-first design, tight feedback loops, surgical changes.",
+      "category": "engineering",
+      "keywords": [
+        "engineering",
+        "skills",
+        "design-patterns",
+        "planning",
+        "agents"
+      ]
+    }
+  ]
+}

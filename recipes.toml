@@ -1,0 +1,35 @@
+# Single source of truth for plugin metadata.
+# Every manifest in .claude-plugin/, every agents/openai.yaml and the optional
+# root plugin.json are GENERATED from this file plus each skills/*/SKILL.md.
+# Run `make build` after editing. Never hand-edit a generated file.
+
+[plugin]
+name = "software-recipes"
+display_name = "Software Recipes"
+version = "0.1.0"
+description = "Rob's agent skills for planning, building and verifying software: pattern-first design, tight feedback loops, surgical changes."
+license = "MIT"
+keywords = ["engineering", "skills", "design-patterns", "planning", "agents"]
+category = "engineering"
+
+[author]
+name = "Rob"
+# Set this to the GitHub owner once the repo exists. Install commands in the
+# README use it; nothing else does.
+github_owner = "robrosk"
+
+[marketplace]
+# Marketplace id users type after '@', e.g. software-recipes@software-recipes.
+name = "software-recipes"
+description = "Rob's software-recipes skills as a single installable plugin."
+
+[targets]
+# Claude-style manifests (.claude-plugin/) are read by Claude Code, Codex and
+# Copilot CLI alike. Always on.
+claude = true
+# Per-skill agents/openai.yaml: Codex picker metadata + invocation policy.
+codex_skill_metadata = true
+# Root plugin.json in the Agent Plugins 1.0 format. Codex and Copilot prefer it
+# over .claude-plugin/ when present, so leave it off until verified with
+# `copilot plugin install` and `codex plugin add` (see docs/PLAN.md, Open risks).
+agent_plugins = false

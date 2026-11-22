@@ -1,0 +1,21 @@
+{
+  "name": "software-recipes",
+  "displayName": "Software Recipes",
+  "version": "0.1.0",
+  "description": "Rob's agent skills for planning, building and verifying software: pattern-first design, tight feedback loops, surgical changes.",
+  "author": {
+    "name": "Rob"
+  },
+  "repository": "https://github.com/robrosk/software-recipes",
+  "license": "MIT",
+  "keywords": [
+    "engineering",
+    "skills",
+    "design-patterns",
+    "planning",
+    "agents"
+  ],
+  "skills": [
+    "./skills/plan-with-patterns"
+  ]
+}
