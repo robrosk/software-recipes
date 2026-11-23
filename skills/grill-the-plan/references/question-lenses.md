@@ -16,10 +16,8 @@ Read this in step 2 to find decisions the subject has not raised yet. Each lens 
 - What is the public interface of each, and what stays hidden behind it?
 - Where are the seams: the places we swap an implementation, inject a fake, or test in isolation?
 
-## Patterns and forces
-- Which design pattern does each module use, and what force earns it?
-- Where is a plain function enough?
-- Which pattern would we regret if the requirements moved in the obvious direction?
+## Patterns
+- Does any part seem to need a design pattern? Do not settle it here: defer it to design-the-system, which admits a pattern only against a named failure, and route the hand-off there.
 
 ## Data and state
 - What data flows through, in what shape, and who owns each piece?
