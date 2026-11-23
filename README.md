@@ -38,9 +38,10 @@ All three read the same `.claude-plugin/marketplace.json` and `.claude-plugin/pl
 **User-invoked** (only you can fire these, by typing `/name`)
 
 - **[grill-the-plan](./skills/grill-the-plan/SKILL.md)**: Interview you one question at a time until the design is clear, then hand off to plan-with-patterns.
+- **[design-the-system](./skills/design-the-system/SKILL.md)**: Pin down behavior, scale and robustness into a contract, draft the design yourself while the agent stress-tests it, and admit a pattern only where it rules out a named failure.
 - **[reflect](./skills/reflect/SKILL.md)**: Turn session lessons into proposed edits to skills, lint rules or notes.
 
-The loop: `grill-the-plan` → `plan-with-patterns` → build → `surgical-diff-review` → `reflect`.
+The loop: `design-the-system` or `grill-the-plan` → `plan-with-patterns` → build → `surgical-diff-review` → `reflect`.
 
 ## How the repo works
 

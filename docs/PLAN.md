@@ -76,13 +76,13 @@ Shipped:
 - `plan-with-patterns` (model-invoked): pattern-first plan before code.
 - `surgical-diff-review` (model-invoked): check every changed line traces to the ask or plan.
 - `grill-the-plan` (user-invoked): interview one question at a time, then hand off to `plan-with-patterns`.
+- `design-the-system` (user-invoked): contract covering behavior, scale and robustness, then the user's own design stress-tested against it, then patterns admitted only where they rule out a named failure.
 - `reflect` (user-invoked): route session lessons into skill edits, lint rules or notes.
 
 Candidates:
 
 - `tdd-slice` (model-invoked): one red-green slice at a pre-agreed seam.
 - `experiment-log` (model-invoked): config, seed, commit and results for every run.
-- System design skill: scalable architecture plus the system-level behaviour it must guarantee. Scope still being discussed.
 - `research-notes` (model-invoked): cited findings from primary sources into the repo.
 
 ## 6. Open risks (verify by hand)

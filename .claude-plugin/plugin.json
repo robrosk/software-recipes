@@ -16,6 +16,7 @@
     "agents"
   ],
   "skills": [
+    "./skills/design-the-system",
     "./skills/grill-the-plan",
     "./skills/plan-with-patterns",
     "./skills/reflect",
