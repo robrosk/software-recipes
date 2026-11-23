@@ -1,0 +1,14 @@
+{
+  "should_trigger": [
+    "Plan out how we add rate limiting to the API before you touch anything",
+    "I want to refactor the data loader into something cleaner, what's the plan?",
+    "Slice docs/design/billing.md into steps I can build one at a time"
+  ],
+  "should_not_trigger": [
+    "Design the architecture for a new RL training library",
+    "Which design pattern should the event pipeline use?",
+    "Fix the typo in README.md",
+    "What does this regex match?",
+    "Run the test suite"
+  ]
+}

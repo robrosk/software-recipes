@@ -6,7 +6,7 @@
 software-recipes/
 ├── recipes.toml                  SSOT: plugin metadata, owner, targets on/off
 ├── skills/                       shipped skills only, one flat level
-│   └── plan-with-patterns/
+│   └── plan-the-change/
 │       ├── SKILL.md              steps every run needs (< 500 lines)
 │       ├── references/           disclosed reference, read on demand
 │       ├── evals/triggers.json   should / should-not trigger prompts
@@ -67,16 +67,16 @@ Per-skill difference: Claude uses `disable-model-invocation: true`; Codex needs 
 - Surgical changes: every changed line traces to the request.
 - Goal-driven execution: turn tasks into verifiable checks and loop until they pass.
 
-The sample skill `plan-with-patterns` combines these: Karpathy's verifiable goal and simplicity cut, Pocock's deep modules and vertical slices, plus Rob's rule that design patterns are named during planning.
+The sample skill, now `plan-the-change`, combines Karpathy's verifiable goal and simplicity cut with Pocock's deep modules and vertical slices. Rob's rule that design patterns are named during planning now lives in `design-the-system`, the only skill that chooses them, so a plan can never bring back a pattern the design rejected.
 
 ## 5. Skills
 
 Shipped:
 
-- `plan-with-patterns` (model-invoked): pattern-first plan before code.
+- `plan-the-change` (model-invoked): goal, modules and vertical slices for one change, reusing the design doc's Patterns table unchanged.
 - `surgical-diff-review` (model-invoked): check every changed line traces to the ask or plan.
-- `grill-the-plan` (user-invoked): interview one question at a time, then hand off to `plan-with-patterns`.
-- `design-the-system` (user-invoked): contract covering behavior, scale and robustness, then the user's own design stress-tested against it, then patterns admitted only where they rule out a named failure.
+- `grill-the-plan` (user-invoked): interview one question at a time, then hand off to `design-the-system` for a new system or cross-module change, or to `plan-the-change` for a small one.
+- `design-the-system` (user-invoked): contract covering behavior, scale and robustness, then the user's own design stress-tested against it, then patterns admitted only where they rule out a named failure. The only skill that chooses design patterns.
 - `break-it` (user-invoked): behavior contract from the docs or a grill, ten computer-use hunters (distinct personas, or on Copilot distinct models across labs) that only report bugs, triage by the main agent, then one fix PR per bug.
 - `orchestrate-prs` (user-invoked): signed design into frozen seams, slices with disjoint file ownership sorted into waves, one linted and cold-read work order per slice, one sign-off, then subagents open one PR each, gated by `surgical-diff-review`, with remaining work orders updated after every merged wave.
 - `garden` (user-invoked, and offered by `orchestrate-prs` after each wave): sweep 19 beds of drift against the design doc and contract, bin each finding as weed, question, leave or bug, rank weeds by how far they would spread, pull each in its own behavior-preserving PR, turn repeat weeds into proposed lint rules or tests, and keep a ledger in `docs/garden/ledger.md` across runs.

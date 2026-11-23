@@ -1,6 +1,6 @@
 # Failure to pattern
 
-Read this in step 7. Start from the failure, never from the pattern. Each row gives the error a pattern rules out and the plainer fix to try first. Admit the pattern only when the plainer fix leaves the error possible.
+Read this in step 9. Start from the failure, never from the pattern. Each row gives the error a pattern rules out and the plainer fix to try first. Admit the pattern only when the plainer fix leaves the error possible.
 
 | Failure the contract names | Pattern that rules it out | Try first |
 | --- | --- | --- |
@@ -19,6 +19,11 @@ Read this in step 7. Start from the failure, never from the pattern. Each row gi
 | Events reach consumers in the wrong order | Partitioned log keyed by entity, sequence numbers | Process one entity at a time |
 | Unsafe action from a learned component | Safety envelope or shield around the policy | A hard bounds check before acting |
 | Run cannot be reproduced | Experiment record: config, seed, commit, data version | Log those four values at start |
+| One model rendered into several external formats drifts per format | Adapter per format behind one interface | One render function per format |
+| Domain logic breaks when the storage changes | Repository at the storage seam | Keep every query in one module |
+| Adding a consumer means editing the producer | Observer or event bus | One list of callbacks in the producer |
+| Config-dependent construction is copied across call sites | Factory | One constructor function |
+| Stages share mutable state, so no stage can be tested alone | Pipeline of pure stages | Functions that take and return data |
 
 ## Signs a pattern is being forced
 
