@@ -3,6 +3,8 @@
 Frontmatter is a deliberately small YAML subset: top-level `key: value`
 scalars plus one nested `metadata:` map of scalars. Every harness parses
 that subset the same way, so a skill that loads here loads everywhere.
+Each value must also be a valid YAML scalar (see scalar.py), because the
+harnesses read this block with real YAML parsers.
 """
 
 from __future__ import annotations
@@ -10,6 +12,8 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
+
+from .scalar import ScalarError, parse_scalar
 
 SKILLS_DIR = "skills"
 SKILL_FILE = "SKILL.md"
@@ -58,11 +62,11 @@ class Skill:
         return self.directory / SKILL_FILE
 
 
-def _unquote(value: str) -> str:
-    value = value.strip()
-    if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
-        return value[1:-1]
-    return value
+def _scalar(value: str, key: str, lineno: int) -> str:
+    try:
+        return parse_scalar(value)
+    except ScalarError as exc:
+        raise FrontmatterError(f"line {lineno}: '{key}': {exc}") from None
 
 
 def parse_frontmatter(text: str) -> tuple[dict[str, str], dict[str, str], str]:
@@ -86,7 +90,7 @@ def parse_frontmatter(text: str) -> tuple[dict[str, str], dict[str, str], str]:
         if nested:
             if not in_metadata:
                 raise FrontmatterError(f"line {lineno}: only 'metadata:' may hold nested keys")
-            metadata[key] = _unquote(value or "")
+            metadata[key] = _scalar(value or "", key, lineno)
             continue
         in_metadata = key == "metadata" and value is None
         if in_metadata:
@@ -95,13 +99,16 @@ def parse_frontmatter(text: str) -> tuple[dict[str, str], dict[str, str], str]:
             raise FrontmatterError(f"line {lineno}: '{key}' has no value")
         if value.startswith(("[", "{", "|", ">")):
             raise FrontmatterError(f"line {lineno}: '{key}' must be a plain one-line scalar")
-        top[key] = _unquote(value)
+        top[key] = _scalar(value, key, lineno)
     return top, metadata, body
 
 
 def load_skill(directory: Path) -> Skill:
     raw = (directory / SKILL_FILE).read_text(encoding="utf-8")
-    frontmatter, metadata, body = parse_frontmatter(raw)
+    try:
+        frontmatter, metadata, body = parse_frontmatter(raw)
+    except FrontmatterError as exc:
+        raise FrontmatterError(f"{SKILLS_DIR}/{directory.name}/{SKILL_FILE}: {exc}") from None
     return Skill(directory=directory, frontmatter=frontmatter, metadata=metadata, body=body, raw=raw)
 
 

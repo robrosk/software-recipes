@@ -1,6 +1,6 @@
 ---
 name: design-the-system
-description: Design a system together, with you leading: pin down its behavior, scale and robustness into a signed contract, draft the design yourself while I probe and stress-test it, then admit a design pattern only where it rules out a named failure.
+description: "Design a system together, with you leading: pin down its behavior, scale and robustness into a signed contract, draft the design yourself while I probe and stress-test it, then admit a design pattern only where it rules out a named failure."
 disable-model-invocation: true
 license: MIT
 metadata:
