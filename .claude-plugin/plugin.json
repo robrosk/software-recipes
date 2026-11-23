@@ -19,6 +19,7 @@
     "./skills/break-it",
     "./skills/design-the-system",
     "./skills/grill-the-plan",
+    "./skills/orchestrate-prs",
     "./skills/plan-with-patterns",
     "./skills/reflect",
     "./skills/surgical-diff-review"
