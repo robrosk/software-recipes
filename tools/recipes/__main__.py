@@ -12,6 +12,7 @@ import sys
 from pathlib import Path
 
 from .pipeline import find_drift, plan_build, write
+from .skill import FrontmatterError
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -31,7 +32,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--root", type=Path, default=ROOT)
     args = parser.parse_args(argv)
 
-    build = plan_build(args.root)
+    try:
+        build = plan_build(args.root)
+    except FrontmatterError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 1
     if not _report(build):
         return 1
     if args.command == "build":

@@ -10,6 +10,7 @@ from pathlib import Path
 
 from tools.recipes.pipeline import find_drift, plan_build, write
 from tools.recipes.rules import validate
+from tools.recipes.scalar import ScalarError, parse_scalar
 from tools.recipes.skill import FrontmatterError, load_skill, parse_frontmatter
 
 REPO = Path(__file__).resolve().parents[1]
@@ -38,6 +39,46 @@ class FrontmatterTests(unittest.TestCase):
     def test_rejects_missing_fence(self):
         with self.assertRaises(FrontmatterError):
             parse_frontmatter("name: demo\n")
+
+    def test_rejects_unquoted_colon_space(self):
+        # The design-the-system description that real YAML parsers refused.
+        with self.assertRaises(FrontmatterError):
+            parse_frontmatter("---\nname: design-the-system\ndescription: Design a system "
+                              "together, with you leading: pin down its behavior.\n---\n")
+
+    def test_checks_metadata_values_too(self):
+        with self.assertRaises(FrontmatterError):
+            parse_frontmatter("---\nname: demo\nmetadata:\n  short-description: Plan: then code\n---\n")
+
+    def test_error_names_the_file(self):
+        root = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, root)
+        folder = make_skill(root, "alpha", "name: alpha\ndescription: Do it: now")
+        with self.assertRaisesRegex(FrontmatterError, "skills/alpha/SKILL.md: line 3"):
+            load_skill(folder)
+
+
+class ScalarTests(unittest.TestCase):
+    def test_accepts_valid_scalars(self):
+        cases = {
+            "Plan a change. Use when asked": "Plan a change. Use when asked",
+            "ratio 1:2 and C# code": "ratio 1:2 and C# code",
+            "-flag is fine": "-flag is fine",
+            '"Hunt: then fix"': "Hunt: then fix",
+            '"say \\"hi\\""': 'say "hi"',
+            "'it''s: quoted'": "it's: quoted",
+        }
+        for text, expected in cases.items():
+            with self.subTest(text=text):
+                self.assertEqual(parse_scalar(text), expected)
+
+    def test_rejects_what_yaml_rejects_or_misreads(self):
+        for text in ("Hunt for bugs: then fix", "ends with:", "a value # comment",
+                     "- list item", ": colon", "? key", "*alias", "&anchor", "!tag",
+                     "%directive", "@reserved", "`tick", "[a, b]", "{a: b}", "> folded",
+                     '"unclosed', '"x" trailing', "'unclosed", "'it's'"):
+            with self.subTest(text=text), self.assertRaises(ScalarError):
+                parse_scalar(text)
 
 
 class RuleTests(unittest.TestCase):
