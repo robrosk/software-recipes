@@ -39,10 +39,13 @@ All three read the same `.claude-plugin/marketplace.json` and `.claude-plugin/pl
 
 - **[grill-the-plan](./skills/grill-the-plan/SKILL.md)**: Interview you one question at a time until the design is clear, then hand off to plan-with-patterns.
 - **[design-the-system](./skills/design-the-system/SKILL.md)**: Pin down behavior, scale and robustness into a contract, draft the design yourself while the agent stress-tests it, and admit a pattern only where it rules out a named failure.
+- **[orchestrate-prs](./skills/orchestrate-prs/SKILL.md)**: Turn a signed-off design into one PR per component, each built by a subagent from a linted standalone work order, in dependency waves, gated by review before you merge.
 - **[break-it](./skills/break-it/SKILL.md)**: Pin down how the system must behave, send ten computer-use hunters at the running app, triage what they find, and fix each confirmed bug in its own PR.
 - **[reflect](./skills/reflect/SKILL.md)**: Turn session lessons into proposed edits to skills, lint rules or notes.
 
 The loop: `design-the-system` or `grill-the-plan` → `plan-with-patterns` → build → `surgical-diff-review` → `break-it` → `reflect`.
+
+For a large system, `orchestrate-prs` replaces the middle: `design-the-system` → `orchestrate-prs` (waves of subagent PRs, each gated by `surgical-diff-review`) → `break-it` → `reflect`.
 
 ## How the repo works
 

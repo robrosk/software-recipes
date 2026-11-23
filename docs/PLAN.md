@@ -78,6 +78,7 @@ Shipped:
 - `grill-the-plan` (user-invoked): interview one question at a time, then hand off to `plan-with-patterns`.
 - `design-the-system` (user-invoked): contract covering behavior, scale and robustness, then the user's own design stress-tested against it, then patterns admitted only where they rule out a named failure.
 - `break-it` (user-invoked): behavior contract from the docs or a grill, ten computer-use hunters (distinct personas, or on Copilot distinct models across labs) that only report bugs, triage by the main agent, then one fix PR per bug.
+- `orchestrate-prs` (user-invoked): signed design into frozen seams, slices with disjoint file ownership sorted into waves, one linted and cold-read work order per slice, one sign-off, then subagents open one PR each, gated by `surgical-diff-review`, with remaining work orders updated after every merged wave.
 - `reflect` (user-invoked): route session lessons into skill edits, lint rules or notes.
 
 Candidates:
