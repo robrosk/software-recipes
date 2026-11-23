@@ -44,9 +44,9 @@ All three read the same `.claude-plugin/marketplace.json` and `.claude-plugin/pl
 - **[garden](./skills/garden/SKILL.md)**: Sweep the codebase for drift from its design, rank the weeds by how far they would spread, and pull each one in its own small behavior-preserving PR; a weed that comes back becomes a lint rule.
 - **[reflect](./skills/reflect/SKILL.md)**: Turn session lessons into proposed edits to skills, lint rules or notes.
 
-The loop: `grill-the-plan` → `design-the-system` (a new system or cross-module change) or straight to `plan-the-change` (a small change) → build → `surgical-diff-review` → `break-it` → `garden` → `reflect`. Only `design-the-system` chooses design patterns; every later skill reuses its Patterns table.
+The loop: `grill-the-plan` → `design-the-system` (a new system or cross-module change) or straight to `plan-the-change` (a small change) → build → `surgical-diff-review` → `break-it` → `garden` → `reflect`. Only `design-the-system` chooses design patterns; every later skill reuses its Patterns table. When `plan-the-change` departs from the design doc's architecture, the same PR updates the doc.
 
-For a large system, `orchestrate-prs` replaces the middle: `design-the-system` → `orchestrate-prs` (waves of subagent PRs, each gated by `surgical-diff-review`, with a `garden` pass offered after each wave) → `break-it` → `reflect`.
+For a large system, `orchestrate-prs` replaces the middle: `design-the-system` (required: it saves the design doc with the architecture and system-level behavior contract) → `orchestrate-prs` (waves of subagent PRs, each gated by `surgical-diff-review`, with a `garden` pass offered after each wave) → `break-it` → `reflect`.
 
 ## How the repo works
 

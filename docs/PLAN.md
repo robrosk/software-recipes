@@ -73,12 +73,12 @@ The sample skill, now `plan-the-change`, combines Karpathy's verifiable goal and
 
 Shipped:
 
-- `plan-the-change` (model-invoked): goal, modules and vertical slices for one change, reusing the design doc's Patterns table unchanged.
+- `plan-the-change` (model-invoked): goal, modules and vertical slices for one change, reusing the design doc's Patterns table unchanged and updating the doc in the same PR when the change departs from its architecture.
 - `surgical-diff-review` (model-invoked): check every changed line traces to the ask or plan.
 - `grill-the-plan` (user-invoked): interview one question at a time, then hand off to `design-the-system` for a new system or cross-module change, or to `plan-the-change` for a small one.
 - `design-the-system` (user-invoked): contract covering behavior, scale and robustness, then the user's own design stress-tested against it, then patterns admitted only where they rule out a named failure. The only skill that chooses design patterns.
 - `break-it` (user-invoked): behavior contract from the docs or a grill, ten computer-use hunters (distinct personas, or on Copilot distinct models across labs) that only report bugs, triage by the main agent, then one fix PR per bug.
-- `orchestrate-prs` (user-invoked): signed design into frozen seams, slices with disjoint file ownership sorted into waves, one linted and cold-read work order per slice, one sign-off, then subagents open one PR each, gated by `surgical-diff-review`, with remaining work orders updated after every merged wave.
+- `orchestrate-prs` (user-invoked): requires a saved `design-the-system` doc with the architecture and signed behavior contract, then turns it into frozen seams, slices with disjoint file ownership sorted into waves, one linted and cold-read work order per slice, one sign-off, then subagents open one PR each, gated by `surgical-diff-review`, with remaining work orders updated after every merged wave.
 - `garden` (user-invoked, and offered by `orchestrate-prs` after each wave): sweep 19 beds of drift against the design doc and contract, bin each finding as weed, question, leave or bug, rank weeds by how far they would spread, pull each in its own behavior-preserving PR, turn repeat weeds into proposed lint rules or tests, and keep a ledger in `docs/garden/ledger.md` across runs.
 - `reflect` (user-invoked): route session lessons into skill edits, lint rules or notes.
 

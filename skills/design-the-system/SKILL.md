@@ -44,7 +44,7 @@ The user leads; the agent sharpens. Every question follows the same shape:
 
 9. **Try each candidate pattern.** For each gap and each error-prone spot, look up the failure in [references/failure-to-pattern.md](references/failure-to-pattern.md). Ask the user which pattern, if any, they would reach for, then put it on trial: admit it only when it names the contract item it protects, the specific error it rules out, and why a plain function plus a test would not rule it out as well. Done when every admitted pattern has those three answers and every rejected candidate has a one-line reason.
 10. **Review the doc.** Show the user the design doc below and revise until they approve. Done when the user approves the doc.
-11. **Save and hand off.** Save the doc to `docs/design/<system-name>.md`, or where the user asks. Offer the next steps: slice the build by calling the Skill tool with "plan-the-change" and giving it the doc, which it slices without changing the Patterns table; for a system too large for one change, run `/orchestrate-prs` with the doc to build it as waves of subagent PRs; and turn the `INV-n`, `NEVER-n` and `SCN-n` items into property and scenario tests. Done when the doc is saved and the user has picked the next step.
+11. **Save and hand off.** Save the doc to `docs/design/<system-name>.md`, or where the user asks. Offer the next steps: slice the build by calling the Skill tool with "plan-the-change" and giving it the doc, which it slices without changing the Patterns table; for a system too large for one change, run `/orchestrate-prs` with the saved doc to build it as waves of subagent PRs (it requires this doc and will not start without it); and turn the `INV-n`, `NEVER-n` and `SCN-n` items into property and scenario tests. Done when the doc is saved and the user has picked the next step.
 
 ## Output
 
@@ -81,4 +81,7 @@ Rung: <name> because <reason>
 
 ## Deferred
 - <question>: <what would settle it>
+
+## Change log
+- <date>, <PR>: <what changed in the design and why>
 ```
