@@ -77,6 +77,7 @@ Shipped:
 - `surgical-diff-review` (model-invoked): check every changed line traces to the ask or plan.
 - `grill-the-plan` (user-invoked): interview one question at a time, then hand off to `plan-with-patterns`.
 - `design-the-system` (user-invoked): contract covering behavior, scale and robustness, then the user's own design stress-tested against it, then patterns admitted only where they rule out a named failure.
+- `break-it` (user-invoked): behavior contract from the docs or a grill, ten computer-use hunters (distinct personas, or on Copilot distinct models across labs) that only report bugs, triage by the main agent, then one fix PR per bug.
 - `reflect` (user-invoked): route session lessons into skill edits, lint rules or notes.
 
 Candidates:
