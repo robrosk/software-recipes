@@ -18,6 +18,7 @@
   "skills": [
     "./skills/break-it",
     "./skills/design-the-system",
+    "./skills/garden",
     "./skills/grill-the-plan",
     "./skills/orchestrate-prs",
     "./skills/plan-with-patterns",
