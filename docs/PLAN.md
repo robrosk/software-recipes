@@ -73,7 +73,7 @@ The sample skill, now `plan-the-change`, combines Karpathy's verifiable goal and
 
 Shipped:
 
-- `plan-the-change` (model-invoked): goal, modules and vertical slices for one change, reusing the design doc's Patterns table unchanged and updating the doc in the same PR when the change departs from its architecture.
+- `plan-the-change` (model-invoked): goal, modules and vertical slices for one change, reusing the design doc's Patterns table unchanged and updating the doc in the same PR when the change departs from it; a contract item changes only on the user's go-ahead, with a concrete reason logged.
 - `surgical-diff-review` (model-invoked): check every changed line traces to the ask or plan.
 - `grill-the-plan` (user-invoked): interview one question at a time, then hand off to `design-the-system` for a new system or cross-module change, or to `plan-the-change` for a small one.
 - `design-the-system` (user-invoked): contract covering behavior, scale and robustness, then the user's own design stress-tested against it, then patterns admitted only where they rule out a named failure. The only skill that chooses design patterns.
