@@ -1,6 +1,6 @@
 # Failure to pattern
 
-Read this in step 9. Start from the failure, never from the pattern. Each row gives the error a pattern rules out and the plainer fix to try first. Admit the pattern only when the plainer fix leaves the error possible.
+Read this in part 9. Start from the failure, never from the pattern. Each row gives the error a pattern rules out and the plainer fix to try first. Admit the pattern only when the plainer fix leaves the error possible.
 
 | Failure the contract names | Pattern that rules it out | Try first |
 | --- | --- | --- |

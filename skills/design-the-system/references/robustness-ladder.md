@@ -1,6 +1,6 @@
 # Robustness ladder
 
-Read this in step 3. The rung sets how much machinery the design earns. Pick the lowest rung whose targets cover the answers from the sizing questions; climb only when a number demands it.
+Read this in part 3. Ask the sizing questions one per turn and stop after each; propose a rung only after the last answer. The rung sets how much machinery the design earns. Pick the lowest rung whose targets cover the answers from the sizing questions; climb only when a number demands it.
 
 | Rung | Typical shape | Users and load | Downtime tolerated | Data loss tolerated | What the design usually needs |
 | --- | --- | --- | --- | --- | --- |
