@@ -14,6 +14,7 @@ software-recipes/
 ├── drafts/                       unshipped skills, invisible to every harness
 ├── tools/recipes/                stdlib-only build tool
 │   ├── skill.py                  Skill value object + strict frontmatter parser
+│   ├── scalar.py                 strict YAML scalar check for frontmatter values
 │   ├── config.py                 PluginConfig from recipes.toml
 │   ├── rules.py                  validation rules, one function each
 │   ├── pipeline.py               load → validate → render → write | check
@@ -75,9 +76,9 @@ Shipped:
 
 - `plan-the-change` (model-invoked): goal, modules and vertical slices for one change, reusing the design doc's Patterns table unchanged and updating the doc in the same PR when the change departs from it; a contract item changes only on the user's go-ahead, with a concrete reason logged.
 - `surgical-diff-review` (model-invoked): check every changed line traces to the ask or plan.
-- `grill-the-plan` (user-invoked): interview one question at a time, then hand off to `design-the-system` for a new system or cross-module change, or to `plan-the-change` for a small one.
-- `design-the-system` (user-invoked): contract covering behavior, scale and robustness, then the user's own design stress-tested against it, then patterns admitted only where they rule out a named failure. The only skill that chooses design patterns.
-- `break-it` (user-invoked): behavior contract from the docs or a grill, ten computer-use hunters (distinct personas, or on Copilot distinct models across labs) that only report bugs, triage by the main agent, then one fix PR per bug.
+- `grill-the-plan` (user-invoked): interview one question per turn, stopping for each answer, then hand off to `design-the-system` for a new system or cross-module change, or to `plan-the-change` for a small one.
+- `design-the-system` (user-invoked): contract covering behavior, scale and robustness, then the user's own design stress-tested against it, then patterns admitted only where they rule out a named failure. The only skill that chooses design patterns. It asks one question per turn with a progress line and stops for the answer, keeps the user's answers in `docs/design/<system>-working.md` so a new session can resume, writes the design doc from that file in part 10, and deletes the working file once the doc is saved.
+- `break-it` (user-invoked): behavior contract from the docs or a grill, ten hunters, each driving its own browser (distinct personas, or on Copilot distinct models across labs) that only report bugs, triage by the main agent, then one fix PR per bug.
 - `orchestrate-prs` (user-invoked): requires a saved `design-the-system` doc with the architecture and signed behavior contract, then turns it into frozen seams, slices with disjoint file ownership sorted into waves, one linted and cold-read work order per slice, one sign-off, then subagents open one PR each, gated by `surgical-diff-review`, with remaining work orders updated after every merged wave.
 - `garden` (user-invoked, and offered by `orchestrate-prs` after each wave): sweep 19 beds of drift against the design doc and contract, bin each finding as weed, question, leave or bug, rank weeds by how far they would spread, pull each in its own behavior-preserving PR, turn repeat weeds into proposed lint rules or tests, and keep a ledger in `docs/garden/ledger.md` across runs.
 - `reflect` (user-invoked): route session lessons into skill edits, lint rules or notes.
@@ -90,6 +91,6 @@ Candidates:
 
 ## 6. Open risks (verify by hand)
 
-1. Codex and Copilot installs are **not yet tested** here; the Codex and Copilot CLIs were not available in this environment. Claude Code install was tested: 1 skill loads, no duplicates.
+1. Codex and Copilot installs are **not yet tested**; neither CLI is available in the build environment. Claude Code install was tested when the plugin held its first skill: it loaded once, with no duplicates. On Nov 23 a Copilot install reported "Marketplace not found". Copilot's docs only show `install NAME@MARKETPLACE` working after `marketplace add` has registered the marketplace, so the README now lists the add, a `marketplace list` check, then the install. Copilot's documented `source` examples are subfolders such as `./plugins/<name>`; whether it accepts this repo's `"source": "./"` is unconfirmed. Codex's docs show `codex plugin marketplace add` and installing from the `/plugins` browser, not a one-line install command.
 2. `claude plugin validate . --strict` fails only on a missing icon. Add a square PNG at `.claude-plugin/icon.png` (512 to 2048 px) to pass strict mode.
 3. The Agent Plugins `extensions` key shape (`"com.openai"`) is from docs, not an install. Test before flipping `agent_plugins = true`.

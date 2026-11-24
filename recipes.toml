@@ -7,15 +7,15 @@
 name = "software-recipes"
 display_name = "Software Recipes"
 version = "0.1.0"
-description = "Rob's agent skills for planning, building and verifying software: pattern-first design, tight feedback loops, surgical changes."
+description = "Rob's agent skills for planning, building and verifying software: contract-first design, patterns only where they earn their place, tight feedback loops, surgical changes."
 license = "MIT"
 keywords = ["engineering", "skills", "design-patterns", "planning", "agents"]
 category = "engineering"
 
 [author]
 name = "Rob"
-# Set this to the GitHub owner once the repo exists. Install commands in the
-# README use it; nothing else does.
+# GitHub owner of the repo. The generated plugin.json builds its repository
+# URL from it.
 github_owner = "robrosk"
 
 [marketplace]

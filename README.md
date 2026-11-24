@@ -4,29 +4,36 @@ Rob's agent skills for planning, building and verifying software. One repo, inst
 
 ## Install
 
+Every tool takes two steps in this order: register the repo as a marketplace, then install the plugin from it. The name after `@` is the marketplace's `name` in `.claude-plugin/marketplace.json`, which is `software-recipes`.
 
-**Claude Code**
+**Claude Code** (tested)
 
 ```bash
 claude plugin marketplace add robrosk/software-recipes
 claude plugin install software-recipes@software-recipes
 ```
 
-**Codex**
+**Codex** (not yet tested)
 
 ```bash
 codex plugin marketplace add robrosk/software-recipes
-codex plugin add software-recipes@software-recipes
+codex
 ```
 
-**GitHub Copilot CLI**
+Inside Codex, type `/plugins`, open the `software-recipes` marketplace tab, install `software-recipes`, then start a new session so the skills load. `codex plugin marketplace list` shows whether the first step worked.
+
+**GitHub Copilot CLI** (not yet tested)
 
 ```bash
 copilot plugin marketplace add robrosk/software-recipes
+copilot plugin marketplace list
 copilot plugin install software-recipes@software-recipes
+copilot plugin list
 ```
 
-All three read the same `.claude-plugin/marketplace.json` and `.claude-plugin/plugin.json`.
+Run `marketplace add` first: `install` with `@software-recipes` only works once `marketplace list` shows `software-recipes`. If `marketplace add` fails to fetch the repo, run `/login` inside `copilot` and try again. To skip the marketplace entirely, `copilot plugin install robrosk/software-recipes` installs straight from the repo.
+
+All three tools fall back to the Claude-style manifests in `.claude-plugin/`. Copilot checks `marketplace.json`, `.plugin/`, and `.github/plugin/` first, and Codex calls `.claude-plugin/` its legacy-compatible path. The repo ships only that one copy until a Codex and a Copilot install show a second is needed.
 
 ## Skills
 
@@ -38,9 +45,9 @@ All three read the same `.claude-plugin/marketplace.json` and `.claude-plugin/pl
 **User-invoked** (only you can fire these, by typing `/name`)
 
 - **[grill-the-plan](./skills/grill-the-plan/SKILL.md)**: Interview you one question at a time until the design is clear, then hand off to design-the-system for a big design or plan-the-change for a small change.
-- **[design-the-system](./skills/design-the-system/SKILL.md)**: Pin down behavior, scale and robustness into a contract, draft the design yourself while the agent stress-tests it, and admit a pattern only where it rules out a named failure. The only skill that chooses design patterns.
+- **[design-the-system](./skills/design-the-system/SKILL.md)**: Pin down behavior, scale and robustness into a contract, draft the design yourself while the agent stress-tests it, and admit a pattern only where it rules out a named failure. Asks one question per turn and keeps your answers in `docs/design/<system>-working.md` until the final doc is saved. The only skill that chooses design patterns.
 - **[orchestrate-prs](./skills/orchestrate-prs/SKILL.md)**: Turn a signed-off design into one PR per component, each built by a subagent from a linted standalone work order, in dependency waves, gated by review before you merge.
-- **[break-it](./skills/break-it/SKILL.md)**: Pin down how the system must behave, send ten computer-use hunters at the running app, triage what they find, and fix each confirmed bug in its own PR.
+- **[break-it](./skills/break-it/SKILL.md)**: Pin down how the system must behave, send ten hunters, each with its own browser, at the running app, triage what they find, and fix each confirmed bug in its own PR.
 - **[garden](./skills/garden/SKILL.md)**: Sweep the codebase for drift from its design, rank the weeds by how far they would spread, and pull each one in its own small behavior-preserving PR; a weed that comes back becomes a lint rule.
 - **[reflect](./skills/reflect/SKILL.md)**: Turn session lessons into proposed edits to skills, lint rules or notes.
 
