@@ -8,7 +8,7 @@
     {
       "name": "software-recipes",
       "source": "./",
-      "description": "Rob's agent skills for planning, building and verifying software: pattern-first design, tight feedback loops, surgical changes.",
+      "description": "Rob's agent skills for planning, building and verifying software: contract-first design, patterns only where they earn their place, tight feedback loops, surgical changes.",
       "category": "engineering",
       "keywords": [
         "engineering",

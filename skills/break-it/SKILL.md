@@ -1,6 +1,6 @@
 ---
 name: break-it
-description: "Hunt for bugs in a running app: pin down how the system must behave, send ten computer-use subagents to use it and break it, triage what they find, then fix each confirmed bug in its own pull request."
+description: "Hunt for bugs in a running app: pin down how the system must behave, send ten subagents, each driving its own browser, to use it and break it, triage what they find, then fix each confirmed bug in its own pull request."
 disable-model-invocation: true
 license: MIT
 metadata:
