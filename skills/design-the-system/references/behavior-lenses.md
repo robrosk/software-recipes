@@ -1,6 +1,6 @@
 # Behavior lenses
 
-Read this in step 2 to fill gaps in the user's own list of questions, and in step 4 while grilling. Each lens is a family of questions; ask the ones that fit the system, one at a time. Scale and robustness questions live in [robustness-ladder.md](robustness-ladder.md).
+Read this in part 2 to fill gaps in the user's own list of questions, and in part 4 while grilling. Each lens is a family of questions; ask the ones that fit the system, one per turn, and stop after each. Scale and robustness questions live in [robustness-ladder.md](robustness-ladder.md).
 
 ## Invariants (INV)
 - What must be true at every moment the system runs? Think of balances, counts, ownership, ordering, uniqueness.
