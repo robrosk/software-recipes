@@ -1,6 +1,6 @@
 # Design doc template
 
-Read this in part 10, when you write the doc for review, and not before: the doc is assembled from answers the user has already given, so nothing in it is drafted ahead of the interview.
+Read this in part 10, when you write the doc for review, and not before: the doc is assembled from the working file's Decided section, so nothing in it is drafted ahead of the interview.
 
 ```
 # <System> design

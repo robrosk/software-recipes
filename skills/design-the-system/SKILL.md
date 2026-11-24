@@ -21,13 +21,24 @@ Two things have to hold at once: the system underneath scales as far as it needs
 This is an interview, not a report. Every part depends on the user's answers to the parts before it, so the agent cannot do a later part ahead of time without inventing those answers. Each turn follows the same loop:
 
 1. **Work silently.** Read code, docs or the user's last answer as the current part needs. Write nothing for later parts.
-2. **Show where you are.** Start the message with one progress line: `Part 3 of 11: size the system (question 2 of 9)`.
-3. **Ask one question.** Ask only the current part's next question. Name no later part's questions.
-4. **Stop.** End your turn here and wait for the user's reply. If your harness has a tool for asking the user, ask through it; otherwise end the message on the question. Do not answer the question yourself, do not draft later parts, and do not write the design doc.
+2. **Record the answer.** Update the working file (below) with what the user's last reply settled, before you ask anything new.
+3. **Show where you are.** Start the message with one progress line: `Part 3 of 11: size the system (question 2 of 9)`.
+4. **Ask one question.** Ask only the current part's next question. Name no later part's questions.
+5. **Stop.** End your turn here and wait for the user's reply. If your harness has a tool for asking the user, ask through it; otherwise end the message on the question. Do not answer the question yourself, do not draft later parts, and do not write the design doc.
 
 Move to the next part only when the user's own reply says this part is done: they answered its last question, confirmed it, or said to skip or defer it. Silence, your own recommendation, or a guess about what they would say never closes a part. When the user says "your call", give your recommendation, record it as theirs only after they accept it, and stop again.
 
-The design doc is written once, in part 10, from the answers already given. Its template lives in [references/design-doc.md](references/design-doc.md); do not open it before part 10.
+The design doc is written once, in part 10, from the working file's Decided section. Its template lives in [references/design-doc.md](references/design-doc.md); do not open it before part 10.
+
+## Working file
+
+The interview keeps its memory in a file, so it survives a long chat or a new session, and so the user can open it mid-interview and catch a misread before it is built on.
+
+- **Where.** `docs/design/<system-name>-working.md`, next to where the final doc will go, or beside the path the user asks for. Create it on the user's first answer, naming it after the system as they describe it.
+- **Decided.** Only what the user answered or confirmed, one line each, tagged with its part: `- [P3] Peak load is 5x the average, at 9 AM`. Never your recommendation, a guess, or an answer you filled from the code that the user has not confirmed. In part 5, add each line's contract id: `- [P3] Q-2: peak load 5x the average, at 9 AM`.
+- **Open.** Every question still to ask, in interview order, then every item the user deferred or skipped, each with its reason. After part 2, Open holds the agreed interview order.
+- **When.** Update it every turn that settles something, before the turn's one question. Writing the file is never a reason to skip the stop.
+- **Resume.** When a `*-working.md` file for this system already exists, read it first, tell the user in one line which part it reaches, and continue from the first Open item with a single question.
 
 ## Interview rules
 
@@ -56,5 +67,5 @@ The user leads; the agent sharpens. Every question follows the same shape:
 ## Pass 3: patterns on trial
 
 9. **Try each candidate pattern.** For each gap and each error-prone spot, look up the failure in [references/failure-to-pattern.md](references/failure-to-pattern.md). Take one candidate per turn: ask the user which pattern, if any, they would reach for, then put it on trial. Admit it only when it names the contract item it protects, the specific error it rules out, and why a plain function plus a test would not rule it out as well. Done when every admitted pattern has those three answers and every rejected candidate has a one-line reason.
-10. **Review the doc.** Now open [references/design-doc.md](references/design-doc.md) and fill it from the answers given in parts 1 to 9, adding nothing the user did not settle. Show it and ask the user to approve or change it; revise until they approve. Done when the user approves the doc.
-11. **Save and hand off.** Save the doc to `docs/design/<system-name>.md`, or where the user asks. Offer the next steps: slice the build by calling the Skill tool with "plan-the-change" and giving it the doc, which it slices without changing the Patterns table; for a system too large for one change, run `/orchestrate-prs` with the saved doc to build it as waves of subagent PRs (it requires this doc and will not start without it); and turn the `INV-n`, `NEVER-n` and `SCN-n` items into property and scenario tests. Ask which one they want. Done when the doc is saved and the user has picked the next step.
+10. **Review the doc.** Now open [references/design-doc.md](references/design-doc.md) and fill it from the working file's Decided section, adding nothing the user did not settle; every deferred or skipped Open item goes in its Deferred section. Show it and ask the user to approve or change it; revise until they approve. Done when the user approves the doc.
+11. **Save and hand off.** Save the doc to `docs/design/<system-name>.md`, or where the user asks, then delete the working file: the design doc is now the one source of truth, and a second copy would drift from it. Offer the next steps: slice the build by calling the Skill tool with "plan-the-change" and giving it the doc, which it slices without changing the Patterns table; for a system too large for one change, run `/orchestrate-prs` with the saved doc to build it as waves of subagent PRs (it requires this doc and will not start without it); and turn the `INV-n`, `NEVER-n` and `SCN-n` items into property and scenario tests. Ask which one they want. Done when the doc is saved and the user has picked the next step.
