@@ -1,42 +1,53 @@
 # Sweeper brief
 
-Read this in step 4 when the scope is too large to sweep in one pass. Fan out to 2 to 4 sweepers; more than that and merging their findings costs more than it saves. For a small scope, sweep alone.
+Read this in steps 4 and 5. Every sweeper sweeps every bed across the whole scope, on its own. Overlap is the point: each model sees the same garden and misses different things, so the merged list covers more than any one of them would.
 
-## Splitting the work
+## Lenses
 
-- Give each sweeper a disjoint set of beds, not a disjoint set of files. Drift that spans files (duplication, change preventers, naming) only shows up to a sweeper that sees the whole scope.
-- Bed 19 goes to every sweeper; you dedupe its findings when you merge.
-- Sweepers are read-only: they change no file, run no formatter, open no branch and spawn no subagents. On Claude Code, use a read-only agent (the built-in Explore agent, or one with only Read, Grep and Glob). On Codex and Copilot, say it in the brief and check the working copy is unchanged after they return.
+Give each sweeper one lens, all distinct. A lens is only where the sweeper starts and which way it walks; every sweeper still covers all 19 beds. Hand them out in this order, the first to the strongest model:
+
+| # | Lens | Start from | Walk toward |
+| --- | --- | --- | --- |
+| 1 | Contract first | Each `INV`, `NEVER`, `SCN` and `FAIL` item | The code and test that should guarantee it |
+| 2 | Code first | Each module in the scope | The yardstick line it should follow |
+| 3 | Copy first | The files new code imitates: templates, base classes, examples, the most imported and the most recently copied modules | Every place their patterns were copied to |
+| 4 | Docs first | README, ADRs, the design doc, `AGENTS.md`, `CLAUDE.md` and skill files | The code each claim describes |
+| 5 | History first | The most recent commits in the scope, newest first | What each one left half done or out of step with the docs |
+
+With more sweepers than lenses, start again from lens 1. With fewer, use the first ones.
 
 ## The brief
 
 Paste this, filled in, as each sweeper's whole prompt. Sweepers may not load `AGENTS.md`, so paste every rule they need.
 
 ```
-You are sweeping a codebase for drift. You find; you never fix.
+You are sweeping a codebase for drift from its docs. You find; you never fix.
 
 Scope: <paths or commit range>
-Your beds: <numbers and rows pasted from beds.md, plus bed 19>
+Your lens: <name, where to start and which way to walk, pasted from the
+table>
+Beds: <all 19 rows pasted from beds.md>
 
 Yardstick (pasted verbatim):
 <contract items, Architecture table, Patterns table, glossary terms and
-repo rules the beds above need>
+repo rules>
 
 Skip these, already judged correct in an earlier run:
-<Leave entries from the ledger that fall in your beds and scope>
+<Leave entries from the ledger that fall in the scope>
 
 Rules:
-- Change no file. Run no command that writes.
-- Every finding cites file:line, the yardstick line or rule it drifts
-  from, and the evidence. A finding with nothing to point at is taste:
-  drop it.
-- Report each of your beds, including the ones that are clear.
+- Change no file. Run no command that writes. Spawn no subagents.
+- Every find cites file:line, the yardstick line or rule it drifts from,
+  and the evidence. A find with nothing to point at is taste: drop it.
+- Code that does what a contract item forbids, or fails to do what it
+  promises, is a find too: cite the item.
+- Report every bed, including the ones that are clear.
 
 Report, one block per bed:
-Bed <n>: <clear: what you checked | findings below>
+Bed <n>: <clear: what you checked | finds below>
 - <file:line>: <what drifts> | drifts from: <yardstick line> | evidence: <what you saw>
 ```
 
 ## Merging
 
-Merge findings that name the same place and the same drift into one entry, and keep every place a repeated finding showed up, because step 6 counts places to mark repeats. Done when every sweeper has returned and every bed has its line.
+Step 6 merges the reports. Two finds are one entry when they name the same place and the same drift, even when the sweepers worded them differently; keep every place a repeated find showed up, because step 8 counts places to mark repeats, and list every sweeper that raised it in the Found by column. Done when every sweeper has returned and every bed has its line from each one.
