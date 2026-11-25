@@ -1,6 +1,6 @@
 # Ledger
 
-Read this in step 2, to load what earlier runs decided, and in step 13, to record this one. The ledger at `docs/garden/ledger.md` is garden's memory between runs. It is what lets the next run skip correct code it already judged, spot a weed that came back, start from the backlog, and say whether the garden is getting better.
+Read this in step 2, to load what earlier runs decided, and in step 14, to record this one. The ledger at `docs/garden/ledger.md` is garden's memory between runs. It is what lets the next run skip correct code it already judged, spot a weed that came back, start from the backlog, and say whether the garden is getting better.
 
 It is committed, so every session and every harness sees the same history. Each run adds a section at the top and leaves earlier sections as they were.
 
@@ -21,23 +21,21 @@ The areas are Design (beds 1 to 3, 9), Code (beds 4, 5, 7, 8, 10, 15), Tests (be
 ## <YYYY-MM-DD>: <scope>
 
 Yardstick: <design doc path | docs and rules only>   Base: <commit>
+Sweepers: <model and lens per sweeper>
 
 | Area | Grade | Last run |
 
-### Pulled
-- <weed>: <bed>, <file>, PR <link> <(repeat)>
+### Fixed
+- <weed or bug>: <bed>, <file>, found by <sweepers>, PR <link> <(repeat)>
 
 ### Questions
 - <question>: <the decision it needs>
-
-### Bugs
-- <bug>: <contract item>
 
 ### Leave
 - <file or symbol>: <why it is correct>
 
 ### Backlog
-- <rank>. <weed>: <bed>, <file>, spread <n>, risk <n>, cost <small | medium>
+- <rank>. <weed or bug>: <bed>, <file>, spread <n>, risk <n>, cost <small | medium>
 ```
 
 A Leave entry holds only while its code is unchanged. When the next run finds the file or symbol changed since that run's base commit, it sweeps it again.
