@@ -48,7 +48,8 @@ Work on one bug at a time, in rank order. Keep a local integration branch, `brea
 
 Never merge a fix PR. The user reviews and merges every one.
 
-14. **Report.** Write the report below. Done when every entry from step 7 appears in exactly one section.
+14. **Review across fixes.** Before writing the final report, review the combined diff on `break-it/integration` against the base branch for cross-cutting drift introduced across fixes (such as a new backend status code or guard that a caller or UI view must mirror). Done when the combined diff has no unresolved cross-fix drift and every check passes on `break-it/integration`.
+15. **Report.** Write the report below. Done when every entry from step 7 appears in exactly one section.
 
 ## Output
 

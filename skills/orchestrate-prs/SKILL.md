@@ -32,7 +32,7 @@ Read [references/slicing.md](references/slicing.md) before step 3; it holds the 
 
 3. **Freeze the seams.** For every arrow in the design's data flow, write the exact interface in the project's language: types, function signatures, error types, events, schemas, and the dependency-injection lifetime of each service when the design names one. Put every shared type and interface in one **seams slice**, wave 0, that holds only those definitions, stubs that fail loudly, and shared test fixtures. Done when every cross-component call or message has one written interface, and each interface is defined in exactly one place.
 4. **Cut the slices.** One slice per component from the Architecture table; split a component only when its slice would pass the size limit, and fold a tiny one into its nearest neighbor. Give each slice a disjoint set of owned files. Shared files (the composition root, registries, config, package manifests, lockfiles) belong to one **wiring slice**, last, or to the seams slice. Map each contract item to the one slice that implements and tests it. Done when the ownership check in slicing.md passes: file sets are disjoint, every contract item has exactly one slice, and every slice except seams and wiring covers at least one item.
-5. **Sort into waves.** Draw the dependency graph: a slice depends on another when its tests need the other's real behavior, not just its seam. Sort the graph into waves; slices in one wave run in parallel. A cycle means a seam is missing, so move that interface into the seams slice and sort again. Choose the stacking mode with the rules in slicing.md: **wait** (default: a wave starts after the user merges the one before it) or **stacked** (a slice with one unmerged parent branches from that parent's PR). Done when every slice has a wave, the graph has no cycle, and the mode is chosen.
+5. **Sort into waves.** Draw the dependency graph: a slice depends on another when its tests need the other's real behavior, not just its seam. Sort the graph into waves; slices in one wave run in parallel. A cycle means a seam is missing, so move that interface into the seams slice and sort again. Choose the stacking mode with the rules in slicing.md: **wait** (default: a wave starts after the user merges the one before it), **stacked** (a slice with one unmerged parent branches from that parent's PR) or **single-branch** (each gated slice merges into one shared feature branch instead of opening its own PR). Done when every slice has a wave, the graph has no cycle, and the mode is chosen.
 
 ## Pass 3: work orders
 
@@ -62,7 +62,7 @@ Run steps 9 to 14 once per wave, starting with wave 0.
 ```
 # Orchestrate-prs report: <system>
 
-Design: <doc path>   Mode: <wait | stacked>   Waves: <n>   PRs: <n>
+Design: <doc path>   Mode: <wait | stacked | single-branch>   Waves: <n>   PRs: <n>
 
 ## Pull requests
 | Wave | Slice | PR | Covers | Gate | Fix rounds |
