@@ -23,7 +23,7 @@ The contract is the yardstick for all four. A hunter's report names the contract
 
 1. **Read what the project already says.** Read the design doc from design-the-system (`docs/design/*.md`) when one exists, then `README.md`, `GLOSSARY.md`, `docs/adr/`, specs and the key tests. Extract every statement of system behavior into four kinds: `INV-n` (always true), `NEVER-n` (must not happen), `SCN-n` (given, when, then) and `FAIL-n` (a dependency or input fails, the system responds). Keep the source of each item. Done when each kind is marked **stated** (with items and sources) or **missing**, using the test in [references/contract-grill.md](references/contract-grill.md).
 2. **Grill the gaps.** When every kind is stated, skip to step 3: the docs already tell. Otherwise grill the user on the missing kinds only, with the questions and interview rules in [references/contract-grill.md](references/contract-grill.md): one question per message, the user answers first, your recommendation after. If the user would rather design the whole system first, tell them to run `/design-the-system` and resume break-it with its doc. Done when every kind has at least one item, each written with its id.
-3. **Set the hunting ground.** Settle how the app starts, where hunters reach it (URL, command, device), which test accounts and seed data each hunter gets, what is off limits (production, real email or SMS, real payments, third-party APIs with side effects), and the time budget per hunter. Start the app and run one smoke check through the same interface the hunters will use. Done when the app is up, the smoke check passes, the target is not production, and the user has signed off the contract and the ground together in one message.
+3. **Set the hunting ground.** Settle how the app starts, where hunters reach it (URL, command, device), which test accounts and seed data each hunter gets, what is off limits (production, real email or SMS, real payments, third-party APIs with side effects), and the time budget per hunter. Scope any shared background trigger to each hunter's namespace, as [references/platforms.md](references/platforms.md) describes. Start the app and run one smoke check through the same interface the hunters will use. Done when the app is up, the smoke check passes, the target is not production, every shared trigger is scoped per hunter or its hunts are queued one at a time, and the user has signed off the contract and the ground together in one message.
 
 ## Pass 2: hunt
 
@@ -48,8 +48,8 @@ Work on one bug at a time, in rank order. Keep a local integration branch, `brea
 
 Never merge a fix PR. The user reviews and merges every one.
 
-14. **Review across fixes.** Before writing the final report, review the combined diff on `break-it/integration` against the base branch for cross-cutting drift introduced across fixes (such as a new backend status code or guard that a caller or UI view must mirror). Done when the combined diff has no unresolved cross-fix drift and every check passes on `break-it/integration`.
-15. **Report.** Write the report below. Done when every entry from step 7 appears in exactly one section.
+14. **Review across fixes.** Before writing the final report, review the combined diff on `break-it/integration` against the base branch for cross-cutting drift introduced across fixes (such as a new backend status code or guard that a caller or UI view must mirror). For each drift, push the follow-up to the fix PR that introduced it, run step 12 on that branch again, add a line to that PR saying what changed and why, and merge it into `break-it/integration` again. Done when the combined diff has no unresolved cross-fix drift and every check passes on `break-it/integration`.
+15. **Report.** Write the report below. Done when every entry from step 7 appears in exactly one section, and every drift from step 14 has a line under Cross-fix drift.
 
 ## Output
 
@@ -61,6 +61,9 @@ Hunters: <10 personas | 10 models across <k> labs>, <minutes> each
 
 ## Fixed
 | # | Bug | Contract | Severity | PR |
+
+## Cross-fix drift
+- <what drifted, between which fixes>: follow-up pushed to PR <link>
 
 ## Covered by an earlier fix
 - #<n> <bug>: covered by PR <link>
