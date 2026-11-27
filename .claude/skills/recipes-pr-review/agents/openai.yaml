@@ -1,0 +1,5 @@
+# Codex picker metadata for this repo-local skill. Mirrors SKILL.md's
+# metadata; keep the two in step by hand (make build covers skills/ only).
+interface:
+  display_name: "Recipes PR Review"
+  short_description: "Review a software-recipes PR"

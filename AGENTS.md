@@ -6,6 +6,7 @@ This repo ships agent skills as one plugin for Claude Code, Codex and GitHub Cop
 
 - `skills/<name>/SKILL.md` holds only **shipped** skills, one flat level deep. Codex and Copilot discover every `SKILL.md` under `skills/`, so anything unfinished lives in `drafts/<name>/` instead.
 - No symlinks inside `skills/`: Codex drops them when it copies a plugin into its cache.
+- Skills for working on this repo itself (such as `recipes-pr-review`) live in `.claude/skills/<name>/`, which Claude Code and Copilot read, with a symlink in `.agents/skills/` for Codex. They are not shipped, so `make check` does not lint them.
 - `recipes.toml` and each `SKILL.md` are the single source of truth. These files are **generated** by `make build` and are never hand-edited: `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`, `skills/*/agents/openai.yaml`, and the root `plugin.json` when that target is on.
 - Run `make check` before committing. It fails on lint errors and on stale generated files.
 
