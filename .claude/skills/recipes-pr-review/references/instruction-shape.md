@@ -1,6 +1,6 @@
 # Instruction shape
 
-Read this in step 5. An instruction an agent cannot place is skipped or improvised.
+Read this from the step "Check each new instruction can run" in [SKILL.md](../SKILL.md). An instruction an agent cannot place is skipped or improvised.
 
 ## Three questions for every new instruction
 

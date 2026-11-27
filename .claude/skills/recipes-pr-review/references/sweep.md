@@ -1,6 +1,6 @@
 # Reference sweep
 
-Read this in step 4. A skill's steps, done lines, report template and reference files all describe the same run, so a change to one has to show up in the others.
+Read this from the step "Sweep the references" in [SKILL.md](../SKILL.md). A skill's steps, done lines, report template and reference files all describe the same run, so a change to one has to show up in the others.
 
 ## What to search for
 
