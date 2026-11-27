@@ -1,0 +1,12 @@
+{
+  "should_trigger": [
+    "Review this software-recipes PR",
+    "Is this skill edit safe to merge?",
+    "Look over the open pull request on the skills repo and tell me what to fix"
+  ],
+  "should_not_trigger": [
+    "Write a new skill for database migrations",
+    "Review the Plutus PR",
+    "Run make build"
+  ]
+}
