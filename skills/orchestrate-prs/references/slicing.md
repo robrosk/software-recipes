@@ -81,7 +81,7 @@ Choose in step 5 and show it at sign-off.
 
 Stacked mode trades restacking work for speed. Choose it when the user asks, or when they ran stacked PRs on this repo before and said so.
 
-**Single-branch.** When the user wants all waves on one feature branch instead of separate PRs per slice, run each slice in its own worktree branch, gate it in step 12, merge the gated branch into the shared feature branch, and remove the worktree before starting the next wave. Step 13 hands the user the feature branch instead of slice PRs, step 14 runs the check on the feature branch, and after the last wave you open one PR from the feature branch against the base, which the user reviews and merges. Choose it when the user asks for one feature branch, or wants to review the system as a whole rather than slice by slice.
+**Single-branch.** When the user wants all waves on one feature branch instead of separate PRs per slice, run each slice in its own worktree branch, gate it in step 12, merge the gated branch into the shared feature branch, and remove the worktree before starting the next wave. Step 13 hands the user the feature branch instead of slice PRs, step 14 runs the check on the feature branch, and after the last wave you open one PR from the feature branch against the base, which the user reviews and merges. Choose it only when the user asks for one feature branch.
 
 ## Branch names
 
