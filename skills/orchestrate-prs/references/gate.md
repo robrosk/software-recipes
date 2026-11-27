@@ -1,6 +1,6 @@
 # Gate
 
-Read this in step 12 for each PR, and in step 14 after each wave merges.
+Read this in step 12 for each PR, and in step 14 after each wave merges. In single-branch mode, gate each slice branch with the shared feature branch as `<target>`, and read "base branch" in step 14 as the feature branch.
 
 ## The PR gate (step 12)
 
@@ -10,7 +10,7 @@ Run these in order and stop at the first failure; later checks are wasted on a P
 2. **Report matches.** The subagent's report says done, lists every test from the order as passing, and names no stop. A report that says done but lists a stop is treated as stopped.
 3. **Tests exist and fail without the change.** Each test in the order's table is in the diff. For at least the tests covering `NEVER` and `INV` items, check out the target branch with only the test files applied and confirm they fail.
 4. **Check passes.** Run the project's check command on the branch, in a clean working copy. Do not trust the subagent's own run.
-5. **Surgical review.** Call the Skill tool with "surgical-diff-review". Give it the work order as the approved plan: the order's Goal and done line as the goal and its check, the "Tests that define done" table as the slices, and the "Never" section, "Off limits" files and any pattern not in "Design rules" as the cut. A pattern or abstraction the order did not name is drift.
+5. **Surgical review.** Call the Skill tool with "surgical-diff-review". Give it the work order as the approved plan: the order's Goal and done line as the goal and its check, the "Tests that define done" table as the slices, and the "Never" section, "Off limits" files and any pattern not in "Design rules" as the cut. A pattern or abstraction the order did not name is drift. Keep review subagents read-only over the diff and named context files; instruct them to skip builds and test execution because step 4 already ran the project check in a clean working copy.
 6. **Contract spot check.** For each contract line the order implements, read the code path that makes it true and confirm the test exercises that path, not a mock of it.
 
 A PR passes when all six hold. Record the verdict and the fix rounds.

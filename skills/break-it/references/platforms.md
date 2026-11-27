@@ -1,6 +1,6 @@
 # Platforms
 
-Read the section for your harness in step 4, and the Copilot roster in step 5. Facts here were checked against each vendor's docs in November 2026; when your harness behaves differently, trust what it does and tell the user this file is stale.
+Read "Isolated trigger endpoints" in step 3, the section for your harness in step 4, and the Copilot roster in step 5. Facts here were checked against each vendor's docs in November 2026; when your harness behaves differently, trust what it does and tell the user this file is stale.
 
 ## What every harness needs
 
@@ -11,6 +11,8 @@ Three things, checked in step 4:
 3. **One browser per hunter.** Hunters that share a browser close each other's tabs and report each other's state as bugs.
 
 **The isolation probe.** Before briefing, spawn two short probe subagents that each open the app in the browser tool and list their open tabs. If either sees the other's tab, the browser is shared. Then use the fallback: each hunter drives its own headless browser from the terminal by writing and running small Playwright scripts with its own user data directory (`/tmp/break-it/<hunter>/profile`), and reads screenshots and page text after each step. Done when the probe shows separate tabs, or the fallback is in place.
+
+**Isolated trigger endpoints in local harnesses.** When hunters drive a local test server with shared background triggers (such as cron ticks, queue drains, or chaos toggles), scope each trigger and chaos header to the calling hunter's namespace or prefix so parallel hunters never mutate another hunter's seeded state. You do this in step 3, before any hunter starts, using only test harness config, since hunters never change code. When the app cannot scope a trigger per namespace, run the hunts that depend on it one at a time instead of changing app code. Done when every shared trigger is scoped per hunter, or the hunts that use it are queued to run one at a time.
 
 **What "computer use" means here.** The desktop computer-use tools on these harnesses hold one screen for one session, so ten hunters cannot each have a desktop. Browser automation per hunter is how break-it gives ten agents their own way to use the app. Tell the user this once in step 4.
 

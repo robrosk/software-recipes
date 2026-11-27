@@ -47,8 +47,9 @@ A slice that needs a new dependency in a manifest it does not own lists it under
 2. Every file named in the design, and every file a slice must touch for its tests, has an owner.
 3. Every contract item maps to exactly one slice. A cross-cutting item (for example `NEVER-1`, no duplicate charge) maps to the slice that enforces it; the others list it under "Contract lines to respect".
 4. Every slice except seams and wiring covers at least one contract item. A slice that guarantees nothing is folded or cut.
+5. Every existing service whose constructor parameters a slice adds or changes is registered in a block the wiring slice owns, or in lines the order grants that slice up front. Check the composition root (`Program.cs`, DI module, or registry) for registrations built by a manual factory lambda rather than automatic constructor resolution, since those break when the constructor changes.
 
-Done when all four hold.
+Done when all five hold.
 
 ## Dependencies and waves
 
@@ -79,6 +80,8 @@ Choose in step 5 and show it at sign-off.
 - After the user merges a parent, retarget the child PR to the base branch.
 
 Stacked mode trades restacking work for speed. Choose it when the user asks, or when they ran stacked PRs on this repo before and said so.
+
+**Single-branch.** When the user wants all waves on one feature branch instead of separate PRs per slice, run each slice in its own worktree branch, gate it in step 12, merge the gated branch into the shared feature branch, and remove the worktree before starting the next wave. Step 13 hands the user the feature branch instead of slice PRs, step 14 runs the check on the feature branch, and after the last wave you open one PR from the feature branch against the base, which the user reviews and merges. Choose it only when the user asks for one feature branch.
 
 ## Branch names
 
