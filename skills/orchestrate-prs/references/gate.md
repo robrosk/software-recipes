@@ -1,6 +1,6 @@
 # Gate
 
-Read this in step 12 for each PR, and in step 14 after each wave merges.
+Read this in step 12 for each PR, and in step 14 after each wave merges. In single-branch mode, gate each slice branch with the shared feature branch as `<target>`, and read "base branch" in step 14 as the feature branch.
 
 ## The PR gate (step 12)
 
