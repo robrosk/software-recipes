@@ -10,7 +10,7 @@ Read this in step 5. An instruction an agent cannot place is skipped or improvis
 
 ## Finds need a destination
 
-A check that can find something must say what happens to the find: fix it where, re-run which step, and where it lands in the report. Example from #11: break-it's new "Review across fixes" step said what to look for but not where a fix goes when each fix is its own PR, and the report had no section for it.
+A check that can find something must say what happens to the find: fix it where, re-run which step, and where it lands in the report. For example, a new step that reviews across several fix PRs must say which PR a follow-up fix goes on, and the report needs a section that lists it.
 
 ## Match the shape of the neighbors
 
